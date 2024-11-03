@@ -1,9 +1,53 @@
+@font-face {
+    font-family: "zabras";
+    src: url("fonts/zabars.ttf") format('truetype');
+}
+
 body {
-    display:flex;
+    font-family: zabras, Arial, Helvetica, sans-serif;
+    margin: 0;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative; 
+    z-index: 1;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('img_pollo_locco/desert-6814275_1920.png');
+    background-position: center;
+    background-size: cover;
+    opacity: 0.3;
+    z-index: -1; 
+}
+
+h1 {
+    font-size: 64px;
+    letter-spacing: 8px;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
 canvas {
     background-color: black;
+    display:block;
+}
+
+@media only screen and(max-width:720px){
+    canvas {
+        width:100%;
+    }
+}
+
+@media only screen and(max-height:480px){
+    canvas {
+        height:100vh;
+    }
 }
