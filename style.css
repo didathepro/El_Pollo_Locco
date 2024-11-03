@@ -51,3 +51,38 @@ canvas {
         height:100vh;
     }
 }
+
+.d-none {
+    display:none;
+}
+
+.startGameImage {
+    position:relative;
+    height:480px;
+    width:720px;
+}
+
+.startGameBtn {
+    cursor:pointer;
+    font-size:44px;
+    border:none;
+    background-color: rgba(255, 255, 7,0.5);
+    height:100px;
+    width:240px;
+    font-family:"zabras";
+    position: absolute;
+    bottom: 140px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.startGameBtn:hover{
+    background-color: rgba(255, 255, 7,1);
+}
+
+.instructions {
+    font-size:30px;
+    margin-top:50px;
+    display:flex;
+    justify-content: space-around;
+}
