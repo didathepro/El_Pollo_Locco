@@ -21,19 +21,25 @@ class World {
     setWorld() {
         this.character.world = this;
     }
-
     run() {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            this.removeDeletedObjects();
         }, 200);
     }
-
+    
     checkThrowObjects() {
         if (this.keyboard.D) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            let bottle = new Tabasco(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);
         }
+    }
+    
+    removeDeletedObjects() {
+        this.throwableObjects = this.throwableObjects.filter(obj => {
+            return !obj.isDeleted;
+        });
     }
 
     checkCollisions() {
@@ -120,3 +126,4 @@ class World {
         for (let i = 1; i < 9999; i++) window.clearInterval(i);
     }
 }
+

@@ -23,6 +23,11 @@ function displayGameOverScreen(){
     <div class="container">
         <img class="startGameImage" src="img_pollo_locco/GameOver.png">
         <button onclick="startTheGame();" type="button" class="startGameBtn">Play Again</button>
+        <div class ="instructions">
+            <p>Arrows Left/Right = Walk</p>
+            <p>Spacebar = Jump</p>
+            <p>D = Throw Tabasco</p>
+        </div>
     </div>
     `;
 }
