@@ -10,6 +10,7 @@ function startTheGame(){
     canvas=document.getElementById("canvas");
     canvas.classList.remove("d-none");
     document.getElementById("overlay").classList.add("d-none");
+    document.getElementById("gameOver").classList.add("d-none");
 
     world = new World(canvas, keyboard);
     console.log("My character is", world.character);

@@ -17,6 +17,7 @@ function showStartingScreen() {
 
 function displayGameOverScreen(){
     let content = document.getElementById('gameOver');
+    content.classList.remove("d-none");
     content.innerHTML ="";
     content.innerHTML += /*html*/`
     <div class="container">
