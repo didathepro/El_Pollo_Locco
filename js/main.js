@@ -14,3 +14,14 @@ function showStartingScreen() {
     
     `;
 }
+
+function displayGameOverScreen(){
+    let content = document.getElementById('gameOver');
+    content.innerHTML ="";
+    content.innerHTML += /*html*/`
+    <div class="container">
+        <img class="startGameImage" src="img_pollo_locco/GameOver.png">
+        <button onclick="startTheGame();" type="button" class="startGameBtn">Play Again</button>
+    </div>
+    `;
+}
