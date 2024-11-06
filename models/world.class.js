@@ -6,6 +6,9 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
+    coinBar = new CoinBar();
+    bottleBar = new BottleBar();
+    endbossBar = new EndbossBar();
     throwableObjects = [];
     gameOverDisplayed = false; // Flag to track game over display status
 
@@ -67,6 +70,20 @@ class World {
             this.addToMap(this.statusBar);
             this.ctx.translate(this.camera_x, 0);
 
+            this.ctx.translate(-this.camera_x, 0);
+            this.addToMap(this.coinBar);
+            this.ctx.translate(this.camera_x, 0);
+
+            this.ctx.translate(-this.camera_x, 0);
+            this.addToMap(this.bottleBar);
+            this.ctx.translate(this.camera_x, 0);
+            
+            if (this.character.x > 2000) {
+                this.ctx.translate(-this.camera_x, 0);
+                this.addToMap(this.endbossBar);
+                this.ctx.translate(this.camera_x, 0);
+            }
+
             this.addToMap(this.character);
             this.addObjectsToMap(this.level.clouds);
             this.addObjectsToMap(this.level.enemies);
@@ -126,4 +143,3 @@ class World {
         for (let i = 1; i < 9999; i++) window.clearInterval(i);
     }
 }
-
