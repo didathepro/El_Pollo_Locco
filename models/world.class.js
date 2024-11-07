@@ -10,7 +10,7 @@ class World {
     bottleBar = new BottleBar();
     endbossBar = new EndbossBar();
     throwableObjects = [];
-    gameOverDisplayed = false; // Flag to track game over display status
+    gameOverDisplayed = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -40,17 +40,27 @@ class World {
     }
     
     removeDeletedObjects() {
-        this.throwableObjects = this.throwableObjects.filter(obj => {
-            return !obj.isDeleted;
-        });
+        this.throwableObjects = this.throwableObjects.filter(obj => !obj.isDeleted);
+        this.level.enemies = this.level.enemies.filter(enemy => !enemy.isDeleted);
     }
 
     checkCollisions() {
+        // Character and enemy collisions
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
+        });
+    
+        // Tabasco and enemy collisions
+        this.throwableObjects.forEach((bottle) => {
+            this.level.enemies.forEach((enemy) => {
+                if (bottle.isColliding(enemy)) {
+                    enemy.hit(); 
+                    bottle.markForDeletion(); 
+                }
+            });
         });
     }
 
