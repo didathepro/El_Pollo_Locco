@@ -1,5 +1,6 @@
 class World {
     character = new Character();
+    endboss = new Endboss();
     level = Level1;
     canvas;
     ctx;
@@ -55,6 +56,11 @@ class World {
     
         // Tabasco and enemy collisions
         this.throwableObjects.forEach((bottle) => {
+            if (bottle.isColliding(this.endboss)) {
+                this.endboss.hit();
+                this.endbossBar.setPercentage(this.endboss.energy);
+                bottle.markForDeletion();
+            }
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy)) {
                     enemy.hit(); 
@@ -62,8 +68,9 @@ class World {
                 }
             });
         });
+        
     }
-
+    
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
