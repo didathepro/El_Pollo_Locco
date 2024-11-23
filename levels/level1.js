@@ -1,4 +1,4 @@
-const Level1  = new Level([new Chicken(),new Chicken(), new Chicken(),new Endboss()],
+const Level1  = new Level([new Endboss(),new Chicken(),new Chicken(), new Chicken()],
                             [new Cloud()],[
                             new BackgroundObject('img_pollo_locco/img/5_background/layers/air.png',-719),
                             new BackgroundObject('img_pollo_locco/img/5_background/layers/3_third_layer/2.png',-719),

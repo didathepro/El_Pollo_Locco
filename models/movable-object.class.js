@@ -26,7 +26,7 @@ class MoveableObject extends DrawableObject{
             this.y+this.height > mo.y &&
             this.x < mo.x &&
             this.y < mo.y + mo.height;
-}
+    }
 
     hit(){
         this.energy -= 5;
@@ -72,7 +72,7 @@ class MoveableObject extends DrawableObject{
     }
 
     markForDeletion() {
-        this.isDeleted = true; // Mark object for deletion
+        this.isDeleted = true;
     }
 }
 
