@@ -14,6 +14,8 @@ class World {
     gameOverDisplayed = false;
     bottleScore = 0;
     bottle;
+    bossEnergy = 100;
+    isEndbossDead = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -68,9 +70,9 @@ class World {
         // Tabasco and enemy collisions
         this.throwableObjects.forEach((bottle) => {
             if (bottle.isColliding(this.endboss)) {
-                this.endboss.hit();
-                this.endbossBar.setPercentage(this.endboss.energy);
-                bottle.markForDeletion();
+                let energy = this.bossEnergy -=34;
+                this.endbossBar.setPercentage(energy);
+                //bottle.markForDeletion();
             }
             this.level.enemies.forEach((enemy) => {
                 if (bottle.isColliding(enemy)) {
@@ -111,7 +113,7 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        if (this.character.isDead()) {
+        if (this.character.isDead() || this.endboss.isDead()) {
             this.addObjectsToMap(this.level.backgroundObjects);
             this.showGameOverScreen(); // Only show game over screen if not already displayed
 

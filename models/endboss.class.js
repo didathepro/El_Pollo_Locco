@@ -2,7 +2,8 @@ class Endboss extends MoveableObject {
     y = 20;
     width = 470;
     height = 250;
-
+    hadFirstContact = false;
+    firstContactPosition = 1800;
     IMAGES_WALKING = [
         'img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G1.png',
         'img_pollo_locco/img/4_enemie_boss_chicken/1_walk/G2.png',
@@ -58,25 +59,57 @@ class Endboss extends MoveableObject {
 
     animate() {
         setInterval(() => {
-
-            if(this.isDead()){
-                this.playAnimation(this.DEAD_IMAGES);
+            if(this.isDead() && !world.isEndbossDead()){
+                this.bossIsDead();
+            }else if (this.isHurt()) {
+                this.bossIsHurt();
             }
-
+            else if (world && world.character.x > this.firstContactPosition && !this.hadFirstContact) {
+                this.characterHadFirstContact();
+            }
             else {
-                this.playAnimation(this.ALERT_IMAGES);
+                this.playAnimation(this.ALERT_IMAGES)
             }
-        }, 500);
+        },150)
     }
 
-    hit() {
-    
+    bossIsDead() {
+        this.playAnimation(this.DEAD_IMAGES);
+    }
+
+    bossIsHurt() {
+        world.bossEnergy = this.energy;
         this.playAnimation(this.HURT_IMAGES);
-        if (this.energy > 0) {
-            this.energy -= 20;
+    }
+    characterHadFirstContact() {
+        this.playAnimation(this.ATTACK_IMAGES);
+        setInterval(() => {
+            this.hadFirstContact = true;
+        }, 2000);
+        this.endbossMove();
+    }
+    endbossMove() {
+        this.playAnimation(this.IMAGES_WALKING);
+
+        if (this.direction === 'left') {
+            if (this.x > 2400) {
+                this.moveLeft();
+            } else {
+                this.direction = 'right';
+                this.otherDirection = true;
+            }
+        } else if (this.direction === 'right') {
+            if (this.x < 4500) {
+                this.moveOtherDirection();
+            } else {
+                this.direction = 'left';
+                this.otherDirection = false;
+            }
         }
-        if (this.energy <= 0) {
-            this.energy = 0;
-        }
+    }
+
+    moveOtherDirection() {
+        this.x += this.speed;
+        this.otherDirection = true;
     }
 }
