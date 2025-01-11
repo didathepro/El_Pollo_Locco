@@ -4,7 +4,6 @@ class World {
     level = Level1;
     canvas;
     ctx;
-    coins;
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
@@ -13,6 +12,8 @@ class World {
     endbossBar = new EndbossBar();
     throwableObjects = [];
     gameOverDisplayed = false;
+    bottleScore = 0;
+    bottle;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -21,6 +22,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.lastThrowTime = 0;
     }
 
     setWorld() {
@@ -35,12 +37,21 @@ class World {
     }
     
     checkThrowObjects() {
-        if (this.keyboard.D) {
-            let bottle = new Tabasco(this.character.x + 100, this.character.y + 100);
-            this.throwableObjects.push(bottle);
+        let currentTime = Date.now();
+        let timeSinceLastThrow = currentTime - this.lastThrowTime;
+        if (this.keyboard.D && this.bottleScore > 0 && timeSinceLastThrow >= 800) {
+            this.throwBottle();
+            this.lastThrowTime = currentTime;
         }
     }
     
+    throwBottle() {
+        console.log("ThrowingBottle")
+        this.bottle = new Tabasco(this.character.x + 50, this.character.y + 70);
+        this.throwableObjects.push(this.bottle);
+        this.bottleScore -= 1;
+        this.bottleBar.setPercentage(this.bottleScore);
+    }
     removeDeletedObjects() {
         this.throwableObjects = this.throwableObjects.filter(obj => !obj.isDeleted);
         this.level.enemies = this.level.enemies.filter(enemy => !enemy.isDeleted);
@@ -71,6 +82,7 @@ class World {
         });
 
         this.checkCollisionWithCoin();
+        this.checkCollisionWithBottle();
     }
 
     checkCollisionWithCoin() {
@@ -83,6 +95,19 @@ class World {
             }
         });
     }
+
+    checkCollisionWithBottle() {
+        this.level.bottles.forEach((bottle) => {
+            if (this.character.isColliding(bottle) && this.bottleScore < 10) {
+                let i = this.level.bottles.indexOf(bottle);
+                this.bottleScore++;
+                this.character.pickBottle();
+                this.bottleBar.setPercentage(this.bottleScore);
+                this.level.bottles.splice(i, 1);
+            }
+        });
+    }
+
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -118,6 +143,7 @@ class World {
             this.addObjectsToMap(this.level.clouds);
             this.addObjectsToMap(this.level.enemies);
             this.addObjectsToMap(this.level.coins);
+            this.addObjectsToMap(this.level.bottles);
             this.addObjectsToMap(this.throwableObjects);
 
             this.ctx.translate(-this.camera_x, 0);
