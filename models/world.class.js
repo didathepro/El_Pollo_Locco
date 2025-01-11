@@ -46,7 +46,6 @@ class World {
     }
     
     throwBottle() {
-        console.log("ThrowingBottle")
         this.bottle = new Tabasco(this.character.x + 50, this.character.y + 70);
         this.throwableObjects.push(this.bottle);
         this.bottleScore -= 1;

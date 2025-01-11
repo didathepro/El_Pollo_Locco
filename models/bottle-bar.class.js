@@ -21,15 +21,11 @@ class BottleBar extends StatusBar {
     }
 
     setPercentage(percentage) {
-        this.percentage = percentage * 10; // Converts percentage to index range (0 to 5)
+        this.percentage = percentage * 10; 
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
-    /**
-     * Determines the appropriate image index based on the current percentage.
-     * @returns {number} - The index of the image to display.
-     */
     resolveImageIndex() {
         if (this.percentage === 0) return 0;
         if (this.percentage < 40) return 1;

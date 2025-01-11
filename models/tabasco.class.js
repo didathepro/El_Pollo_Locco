@@ -1,4 +1,5 @@
 class Tabasco extends ThrowableObject {
+    active=true;
     FLYING_TABASCO = [
         'img_pollo_locco/img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         'img_pollo_locco/img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -41,15 +42,32 @@ class Tabasco extends ThrowableObject {
     throw() {
         this.speedY = 15;
         this.applyGravity();
-
+        this.otherDirection = world.character.otherDirection;
         // Horizontal movement
         setInterval(() => {
-            if (!this.horizontalMovementStopped) {
+            if(this.active){
+                this.throwDirection();
+            }
+            else if(!this.horizontalMovementStopped) {
                 this.x += 5;
             }
         }, 25);
     }
 
+    throwDirection() {
+        if (this.otherDirection) {
+            this.throwLeft();
+        } else {
+            this.throwRight();
+        }
+        this.playAnimation(this.FLYING_TABASCO); 
+    }
+    throwRight() {
+        this.x += 5;
+    }
+    throwLeft() {
+        this.x -= 5;
+    }
     playSplashAnimation() {
         let currentImageIndex = 0;
         const animationInterval = setInterval(() => {
