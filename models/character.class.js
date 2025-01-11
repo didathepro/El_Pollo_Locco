@@ -48,6 +48,7 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
         this.animate();
+        this.coin = 0;
     }
 
     animate() {

@@ -4,6 +4,7 @@ class World {
     level = Level1;
     canvas;
     ctx;
+    coins;
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
@@ -68,7 +69,19 @@ class World {
                 }
             });
         });
-        
+
+        this.checkCollisionWithCoin();
+    }
+
+    checkCollisionWithCoin() {
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                let i = this.level.coins.indexOf(coin);
+                this.character.pickCoin(coin);
+                this.coinBar.setPercentage(this.character.coin);
+                this.level.coins.splice(i, 1);
+            }
+        });
     }
 
     draw() {
@@ -95,7 +108,7 @@ class World {
             this.addToMap(this.bottleBar);
             this.ctx.translate(this.camera_x, 0);
             
-            if (this.character.x > 2000) {
+            if (this.endboss.x - this.character.x < 550) {
                 this.ctx.translate(-this.camera_x, 0);
                 this.addToMap(this.endbossBar);
                 this.ctx.translate(this.camera_x, 0);
@@ -104,6 +117,7 @@ class World {
             this.addToMap(this.character);
             this.addObjectsToMap(this.level.clouds);
             this.addObjectsToMap(this.level.enemies);
+            this.addObjectsToMap(this.level.coins);
             this.addObjectsToMap(this.throwableObjects);
 
             this.ctx.translate(-this.camera_x, 0);

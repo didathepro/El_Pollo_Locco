@@ -5,7 +5,7 @@ class MoveableObject extends DrawableObject{
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
-
+    coin_sound = new Audio('./audio/coin.mp3');
     applyGravity(){
         setInterval(()=> {
             if(this.isAboveGround() || this.speedY >0){
@@ -71,6 +71,10 @@ class MoveableObject extends DrawableObject{
         this.speedY = 30;
     }
 
+    pickCoin() {
+        this.coin += 1;
+        this.coin_sound.play();
+    }
     markForDeletion() {
         this.isDeleted = true;
     }
